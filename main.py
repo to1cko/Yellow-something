@@ -4,6 +4,7 @@ import random
 from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QPainter, QColor
+from PyQt5.QtCore import Qt
 
 
 class MyWidget(QDialog):
@@ -22,22 +23,20 @@ class MyWidget(QDialog):
             qp.begin(self)
             self.drawing(qp)
             qp.end()
-            #self.q = False
+            #self.update()
 
     def drawing(self, qp):
-        # qp.end()
-        r = random.randint(0, 100)
-        #qp.setBrush(QColor('Yellow'))
-        qp.drawEllipse(random.randint(0, self.x - r // 2), random.randint(0, self.y - r // 2), r, r)
-        qp.drawEllipse(10, 20, 5, 5)
-        for i in range(1000):
-            x = random.randint(1, self.x - 1)
-            y = random.randint(1, self.y - 1)
-            qp.drawPoint(x, y)
+        size = self.size()
+        r = random.randint(10, 100)
+        qp.setBrush(QColor('Yellow'))
+        qp.drawEllipse(random.randint(0, size.width() - r // 2), random.randint(0, size.height() - r // 2), r, r)
+        qp.setPen(Qt.red)
+        self.q = False
         # Имя элемента совпадает с objectName в QTDesigner
 
     def run(self):
         self.q = True
+        self.update()
 
 
 if __name__ == '__main__':
